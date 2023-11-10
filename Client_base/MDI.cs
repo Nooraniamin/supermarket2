@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using BAL;
 namespace Client_base
 {
@@ -20,6 +21,18 @@ namespace Client_base
         private static string a;
         private static string b;
         private static string c;
+        public static string user
+        {
+            get
+            {
+                return a;
+            }
+            private set
+            {
+                a = value;
+            }
+        }
+        
         private void MDI_Load(object sender, EventArgs e)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
@@ -32,11 +45,13 @@ namespace Client_base
                 if (count == 0)
                 {
                     a = c;
+                    
                 }
                 else 
                 {
                     b = c;
                 }
+                count++;
             }
             re.Close();
             if (c == null) 

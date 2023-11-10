@@ -11,28 +11,19 @@ namespace BAL
     public class BAL
     {
         private static string name;
-        public static string user
-        {
-            get
-            {
-                return name;
-            }
-            private set
-            {
-                name = value;
-            }
-        }
-        public static bool isValidUser(string user,string password)
+        
+        public static bool isValidUser(string User,string password)
         {
             ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
             bool status = false;
             try 
             {
                 ds.OpenConnection();
-                ds.LoadSpParameters("st_getdata",user,password);
+                ds.LoadSpParameters("st_getdata",User,password);
                 ds.GetDataReader();
                 ds.CloseConnection();
                 status = true;
+                name = User;
             }
             catch(Exception ex) 
             {
