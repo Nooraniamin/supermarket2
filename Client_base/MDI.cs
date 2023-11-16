@@ -21,6 +21,8 @@ namespace Client_base
         private static string a;
         private static string b;
         private static string c;
+        private static string d;
+        public static string ea;
         public static string user
         {
             get
@@ -32,32 +34,23 @@ namespace Client_base
                 a = value;
             }
         }
+        public static string id
+        {
+            get { return b; }
+            private set { b = value; }
+        }
         
         private void MDI_Load(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
-            StreamReader re = new StreamReader(path);
-            int count = 0;
-            
-            while (!re.EndOfStream)
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\supermarket.txt"))
             {
-                c = re.ReadLine();
-                if (count == 0)
-                {
-                    a = c;
-                    
-                }
-                else 
-                {
-                    b = c;
-                }
-                count++;
-            }
-            re.Close();
-            if (c == null) 
-            {
-                SignIn sa = new SignIn();
+                Setting sa = new Setting();
                 Mainclass.showWindow(sa, this);
+            }
+            else if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt"))
+            {
+                SignIn ia = new SignIn();
+                Mainclass.showWindow(ia, this);
             }
             else
             {
@@ -65,6 +58,35 @@ namespace Client_base
                 Form2 sa = new Form2();
                 Mainclass.showWindow(sa, this);
             }
+            //string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+            //StreamReader re = new StreamReader(path);
+            //int count = 0;
+            //while (!re.EndOfStream)
+            //{
+            //    c = re.ReadLine();
+            //    if (count == 0)
+            //    {
+            //        d = c;
+
+            //    }
+            //    else if (count == 1)
+            //    {
+            //        a = c;
+            //    }
+            //    else
+            //    {
+            //        b = c;
+            //    }
+            //    count++;
+            //}
+            //re.Close();
+
+
+
+
+
+
+
         }
     }
 }

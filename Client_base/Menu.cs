@@ -16,5 +16,11 @@ namespace Client_base
         {
             InitializeComponent();
         }
+
+        private void btn_branch_Click(object sender, EventArgs e)
+        {
+            branch b = new branch();
+            Mainclass.showWindow(b, this, MDI.ActiveForm);
+        }
     }
 }

@@ -38,6 +38,7 @@
             this.IsMdiContainer = true;
             this.Name = "MDI";
             this.Text = "MDI";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MDI_Load);
             this.ResumeLayout(false);
 

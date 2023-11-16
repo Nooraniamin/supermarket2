@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace ooad_project1
 {
     public partial class MDI : Form
@@ -40,6 +40,8 @@ namespace ooad_project1
             }
             else
             {
+                path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                StreamWriter wr = new StreamWriter(path);
                 try
                 {
                     Form1 Is = new Form1();
@@ -47,7 +49,9 @@ namespace ooad_project1
                 }
                 catch (Exception ex)
                 {
+                    wr.WriteLine("");
                     MessageBox.Show(ex.Message);
+                    wr.Close();
                 }
 
             }

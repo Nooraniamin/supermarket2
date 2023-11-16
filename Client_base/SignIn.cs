@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using BAL;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Xml;
+
 namespace Client_base
 {
     public partial class SignIn : Form
@@ -17,23 +21,27 @@ namespace Client_base
         {
             InitializeComponent();
         }
-
+        public void updateConfigFile(string name,string pass)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            foreach (XmlElement xElement in xmlDoc.DocumentElement)
+            {
+                if (xElement.Name == "connectionStrings")
+                {
+                    xElement.FirstChild.Attributes[2].Value = name;
+                    xElement.FirstChild.Attributes[3].Value = pass;
+                }
+            }
+            xmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            ConfigurationManager.RefreshSection("connectionString");
+        }
+        public static string id;
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                BAL.BAL.isValidUser(txt_cmpName.Text, txt_password.Text);
-                MessageBox.Show("Success");
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
-                StreamWriter wr = new StreamWriter(path);
-                wr.WriteLine(txt_cmpName.Text);
-                wr.Write(txt_password.Text);
-                wr.Close();
-            }
-            catch(Exception ex) 
-            {
-                MessageBox.Show(ex.Message);
-            }
+            Setting s = new Setting();
+
+            Retrival.isValidUser(txt_cmpName.Text, txt_password.Text);
             
            
         }
@@ -46,6 +54,16 @@ namespace Client_base
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SignIn_Load(object sender, EventArgs e)
+        {
+            //StreamReader re = new StreamReader("supermarket.txt");
+            //while (!re.EndOfStream)
+            //{
+            //    path1 = re.ReadLine();
+           // }
+            //re.Close();
         }
     }
 }

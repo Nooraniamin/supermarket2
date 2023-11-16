@@ -16,10 +16,10 @@ namespace Client_base
         {
             InitializeComponent();
         }
-
+        public static string id = "1";
         private void Form2_Load(object sender, EventArgs e)
         {
-            
+            lbl_id.Text = id;
             lbl_username.Text = MDI.user;
         }
 
