@@ -27,11 +27,11 @@ namespace Client_base
         {
             get
             {
-                return a;
+                return d;
             }
             private set
             {
-                a = value;
+                d = value;
             }
         }
         public static string id
@@ -54,39 +54,33 @@ namespace Client_base
             }
             else
             {
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                StreamReader re = new StreamReader(path);
+                int count = 0;
+                while (!re.EndOfStream)
+                {
+                    c = re.ReadLine();
+                    if (count == 0)
+                    {
+                        d = c;
+
+                    }
+                    else if (count == 1)
+                    {
+                        a = c;
+                    }
+                    else
+                    {
+                        b = c;
+                    }
+                    count++;
+                }
+                re.Close();
+
                 BAL.BAL.isValidUser(a, b);
                 Form2 sa = new Form2();
                 Mainclass.showWindow(sa, this);
             }
-            //string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
-            //StreamReader re = new StreamReader(path);
-            //int count = 0;
-            //while (!re.EndOfStream)
-            //{
-            //    c = re.ReadLine();
-            //    if (count == 0)
-            //    {
-            //        d = c;
-
-            //    }
-            //    else if (count == 1)
-            //    {
-            //        a = c;
-            //    }
-            //    else
-            //    {
-            //        b = c;
-            //    }
-            //    count++;
-            //}
-            //re.Close();
-
-
-
-
-
-
-
         }
     }
 }

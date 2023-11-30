@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BAL;
 namespace Client_base
 {
     public partial class Menu : Form
@@ -21,6 +21,11 @@ namespace Client_base
         {
             branch b = new branch();
             Mainclass.showWindow(b, this, MDI.ActiveForm);
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

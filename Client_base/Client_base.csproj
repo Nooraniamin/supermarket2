@@ -146,13 +146,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BAL\BAL.csproj">
-      <Project>{23d26f88-566b-4e62-a63a-b376b36f28b5}</Project>
-      <Name>BAL</Name>
-    </ProjectReference>
+    <None Include="Resources\R.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\R.jpg" />
+    <ProjectReference Include="..\BAL\BAL.csproj">
+      <Project>{5c6167ea-8976-47e1-80c2-8cf9a5b7452d}</Project>
+      <Name>BAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

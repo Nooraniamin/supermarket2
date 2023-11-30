@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Configuration;
-
+using BAL;
 namespace Client_base
 {
     public partial class Setting : Form
@@ -33,7 +33,8 @@ namespace Client_base
             xmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             ConfigurationManager.RefreshSection("connectionString");
         }
-        string connection;
+        string connection = "";
+        string connection2;
         string filepath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\supermarket.txt";
         private void saveConnection()
         {
@@ -45,11 +46,25 @@ namespace Client_base
         private void btn_save_Click(object sender, EventArgs e)
         {
             saveConnection();
-            SignIn asd = new SignIn();
-            Mainclass.showWindow(asd, this, MDI.ActiveForm);
             updateConfigFile(connection);
             DialogResult dr = MessageBox.Show("Setting saved successfully");
             ConfigurationManager.RefreshSection("connectionString");
+            SignIn asd = new SignIn();
+            Mainclass.showWindow(asd, this, MDI.ActiveForm);
+
+        }
+
+        private void Setting_Load(object sender, EventArgs e)
+        {
+            saveConnection();
+            updateConfigFile(connection2);
+            DialogResult dr = MessageBox.Show("Setting saved successfully");
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

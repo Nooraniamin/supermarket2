@@ -37,10 +37,14 @@ namespace Client_base
             ConfigurationManager.RefreshSection("connectionString");
         }
         public static string id;
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
         private void button1_Click(object sender, EventArgs e)
         {
+            StreamWriter wr = new StreamWriter(path);
+            wr.WriteLine(txt_cmpName.Text);
+            wr.WriteLine(txt_password.Text);
+            wr.Close();
             Setting s = new Setting();
-
             Retrival.isValidUser(txt_cmpName.Text, txt_password.Text);
             
            

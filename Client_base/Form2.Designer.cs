@@ -59,6 +59,7 @@
             this.lbl_username.Size = new System.Drawing.Size(231, 38);
             this.lbl_username.TabIndex = 1;
             this.lbl_username.Text = "Your Welcome";
+            this.lbl_username.Click += new System.EventHandler(this.lbl_username_Click);
             // 
             // label2
             // 

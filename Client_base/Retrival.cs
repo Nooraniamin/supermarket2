@@ -66,9 +66,7 @@ namespace Client_base
                     {
                         if (user == reader["Name"].ToString() && pass == reader["Key"].ToString())
                         {
-                            Form2 form2 = new Form2();
-                            Mainclass.showWindow(form2, MDI.ActiveForm);
-                            status = true;
+                            MessageBox.Show("SuccessFully");
 
                         }
                         else

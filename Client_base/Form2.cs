@@ -47,5 +47,10 @@ namespace Client_base
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+
+        private void lbl_username_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
