@@ -191,6 +191,7 @@
             this.btn_roles.Text = "ROLES";
             this.btn_roles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_roles.UseVisualStyleBackColor = true;
+            this.btn_roles.Click += new System.EventHandler(this.btn_roles_Click);
             // 
             // panel2
             // 

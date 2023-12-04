@@ -42,45 +42,53 @@ namespace Client_base
         
         private void MDI_Load(object sender, EventArgs e)
         {
-            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\supermarket.txt"))
+            try
             {
-                Setting sa = new Setting();
-                Mainclass.showWindow(sa, this);
-            }
-            else if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt"))
-            {
-                SignIn ia = new SignIn();
-                Mainclass.showWindow(ia, this);
-            }
-            else
-            {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
-                StreamReader re = new StreamReader(path);
-                int count = 0;
-                while (!re.EndOfStream)
+                if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\supermarket.txt"))
                 {
-                    c = re.ReadLine();
-                    if (count == 0)
-                    {
-                        d = c;
-
-                    }
-                    else if (count == 1)
-                    {
-                        a = c;
-                    }
-                    else
-                    {
-                        b = c;
-                    }
-                    count++;
+                    Setting sa = new Setting();
+                    Mainclass.showWindow(sa, this);
                 }
-                re.Close();
+                else if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt"))
+                {
+                    SignIn ia = new SignIn();
+                    Mainclass.showWindow(ia, this);
+                }
+                else
+                {
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                    StreamReader re = new StreamReader(path);
+                    int count = 0;
+                    while (!re.EndOfStream)
+                    {
+                        c = re.ReadLine();
+                        if (count == 0)
+                        {
+                            d = c;
 
-                BAL.BAL.isValidUser(a, b);
-                Form2 sa = new Form2();
-                Mainclass.showWindow(sa, this);
+                        }
+                        else if (count == 1)
+                        {
+                            a = c;
+                        }
+                        else
+                        {
+                            b = c;
+                        }
+                        count++;
+                    }
+                    re.Close();
+
+                    BAL.BAL.isValidUser(a, b);
+                    Form2 sa = new Form2();
+                    Mainclass.showWindow(sa, this);
+                }
             }
+            catch(Exception ex)  
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

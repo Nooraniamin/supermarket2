@@ -121,6 +121,7 @@
             this.lbl_id.Size = new System.Drawing.Size(44, 16);
             this.lbl_id.TabIndex = 8;
             this.lbl_id.Text = "label5";
+            this.lbl_id.Click += new System.EventHandler(this.lbl_id_Click);
             // 
             // Form2
             // 

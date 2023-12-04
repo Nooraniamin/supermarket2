@@ -48,6 +48,29 @@ namespace Client_base
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        public static void getRoles(DataGridView gv, DataGridViewColumn IDGV, DataGridViewColumn NameGV, DataGridViewColumn ID, DataGridViewColumn NAME)
+        {
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("st_getroles", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                IDGV.DataPropertyName = dt.Columns["ID"].ToString();
+                NameGV.DataPropertyName = dt.Columns["NAME"].ToString();
+                ID.DataPropertyName = dt.Columns["COMPANY ID"].ToString();
+                NAME.DataPropertyName = dt.Columns["COMPANY NAME"].ToString();
+                gv.DataSource = dt;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                con.Close();
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
         public static bool isValidUser(string user, string pass)
         {
             bool status = false;

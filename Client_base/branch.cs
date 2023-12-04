@@ -90,5 +90,10 @@ namespace Client_base
 
             }
         }
+
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            Retrival.getbranch(dataGridView1, b_id, b_name, b_fid, b_fname);
+        }
     }
 }
