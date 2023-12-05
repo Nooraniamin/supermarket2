@@ -68,5 +68,10 @@ namespace Client_base
 
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

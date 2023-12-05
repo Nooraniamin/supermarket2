@@ -33,5 +33,11 @@ namespace Client_base
             Roles roles = new Roles();
             Mainclass.showWindow(roles, this, MDI.ActiveForm);
         }
+
+        private void btn_user_Click(object sender, EventArgs e)
+        {
+            User asd = new User();
+            Mainclass.showWindow(asd,this, MDI.ActiveForm);
+        }
     }
 }

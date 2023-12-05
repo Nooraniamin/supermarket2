@@ -158,6 +158,7 @@
             this.btn_user.Text = "USER";
             this.btn_user.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_user.UseVisualStyleBackColor = true;
+            this.btn_user.Click += new System.EventHandler(this.btn_user_Click);
             // 
             // panel3
             // 
