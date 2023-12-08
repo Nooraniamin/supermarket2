@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,22 +26,38 @@ namespace Client_base
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool condition = Retrival.getemp(txt_name.Text, txt_password.Text);
             try
             {
-                if (txt_name.Text != "Owner" || txt_password.Text != "owner")
-                {
-                    MessageBox.Show("Wrong, Please put right username and password", "Error");
-                }
-                else if (txt_name.Text == "" && txt_password.Text == "")
-                {
-                    MessageBox.Show("Please Fill all the entities", "Error");
-                }
-                else if (txt_name.Text == "Owner" && txt_password.Text == "owner")
+                string path1 = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
+                if (condition == true)
                 {
                     MessageBox.Show("You Successfully login", "Success");
+                    StreamWriter w = new StreamWriter(path1);
+                    w.WriteLine(txt_name.Text);
+                    w.WriteLine(txt_password.Text);
+                    w.Close();
                     Menu asd = new Menu();
                     Mainclass.showWindow(asd, this, MDI.ActiveForm);
                 }
+                else
+                {
+                    MessageBox.Show("Invalid User and Password ", "Error");
+                }
+                //if (txt_name.Text != "Owner" || txt_password.Text != "owner")
+                //{
+                //    MessageBox.Show("Wrong, Please put right username and password", "Error");
+                //}
+                //else if (txt_name.Text == "" && txt_password.Text == "")
+                //{
+                //    MessageBox.Show("Please Fill all the entities", "Error");
+                //}
+                //else if (txt_name.Text == "Owner" && txt_password.Text == "owner")
+                //{
+                //    MessageBox.Show("You Successfully login", "Success");
+                //    Menu asd = new Menu();
+                //    Mainclass.showWindow(asd, this, MDI.ActiveForm);
+                //}
             }
             catch (Exception ex) 
             {

@@ -8,11 +8,24 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
 using BAL;
+using System.Xml.Linq;
 
 namespace Client_base
 {
     internal class Retrival
     {
+        private static string id;
+        public static string cmp_id 
+        {
+            get 
+            {
+                return id;
+            }
+            private set 
+            {
+                id = value;
+            }
+        }
         public static string path;
         private static string connection()
         {
@@ -32,6 +45,7 @@ namespace Client_base
                 con.Open();
                 SqlCommand cmd = new SqlCommand("st_getbranch", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", 1);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -55,6 +69,7 @@ namespace Client_base
                 con.Open();
                 SqlCommand cmd = new SqlCommand("st_getroles", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", 1);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -71,13 +86,47 @@ namespace Client_base
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        public static void getuser(DataGridView gv,DataGridViewColumn ID,DataGridViewColumn name,DataGridViewColumn cnic,DataGridViewColumn salary,DataGridViewColumn b_id,DataGridViewColumn branch, DataGridViewColumn r_id, DataGridViewColumn role,DataGridViewColumn u_name,DataGridViewColumn pass, DataGridViewColumn c_pass,DataGridViewColumn c_id, DataGridViewColumn c_name)
+        {
+            try
+            {
+                int cmp = 1;
+                con.Open();
+                SqlCommand cmd = new SqlCommand("st_getusers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", cmp);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                ID.DataPropertyName = dt.Columns["ID"].ToString();
+                name.DataPropertyName = dt.Columns["NAME"].ToString();
+                cnic.DataPropertyName = dt.Columns["CNIC"].ToString();
+                salary.DataPropertyName = dt.Columns["SALARY"].ToString();
+                b_id.DataPropertyName = dt.Columns["B_ID"].ToString();
+                branch.DataPropertyName = dt.Columns["BRANCH"].ToString();
+                r_id.DataPropertyName = dt.Columns["R_ID"].ToString();
+                role.DataPropertyName = dt.Columns["ROLES"].ToString();
+                u_name.DataPropertyName = dt.Columns["U_NAME"].ToString();
+                pass.DataPropertyName = dt.Columns["PASSWORD"].ToString();
+                c_pass.DataPropertyName = dt.Columns["C_PASSWORD"].ToString();
+                c_id.DataPropertyName = dt.Columns["C_ID"].ToString();
+                c_name.DataPropertyName = dt.Columns["COMPANY NAME"].ToString();
+                gv.DataSource = dt;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                con.Close();
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
         public static bool isValidUser(string user, string pass)
         {
             bool status = false;
             try
             {
 
-                SqlCommand cmd = new SqlCommand("st_getuser", con);
+                SqlCommand cmd = new SqlCommand("st_getcompany", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@name", user);
                 cmd.Parameters.AddWithValue("@pass", pass);
@@ -89,8 +138,10 @@ namespace Client_base
                     {
                         if (user == reader["Name"].ToString() && pass == reader["Key"].ToString())
                         {
+                            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                            id = reader["ID"].ToString();
                             MessageBox.Show("SuccessFully");
-
+                            status = true;
                         }
                         else
                         {
@@ -115,5 +166,67 @@ namespace Client_base
             }
             return status;
         }
+        public static bool getemp(string user, string pass)
+        {
+            bool status = false;
+            try
+            {
+                SqlCommand cmd = new SqlCommand("st_getlogin", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", 1);
+                cmd.Parameters.AddWithValue("@name", user);
+                cmd.Parameters.AddWithValue("@pass", pass);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (user == reader["NAME"].ToString() && pass == reader["PASSWORD"].ToString())
+                        {
+                            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                            id = reader["ID"].ToString();
+                            status = true;
+                        }
+                        else
+                        {
+                            status = false;
+                        }
+                    }
+                }
+                else
+                {
+                    status = false;
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                con.Close();
+            }
+            return status;
+        }
+        public static void loaditems(string proc, ComboBox cb, string vMember, string dMember)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(proc, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", 1);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                cb.DisplayMember = dMember;
+                cb.ValueMember = vMember;
+                cb.DataSource = dt;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
+
 }

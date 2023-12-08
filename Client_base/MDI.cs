@@ -54,7 +54,7 @@ namespace Client_base
                     SignIn ia = new SignIn();
                     Mainclass.showWindow(ia, this);
                 }
-                else
+                else if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt"))
                 {
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
                     StreamReader re = new StreamReader(path);
@@ -64,24 +64,50 @@ namespace Client_base
                         c = re.ReadLine();
                         if (count == 0)
                         {
-                            d = c;
+                            user = c;
 
                         }
                         else if (count == 1)
                         {
-                            a = c;
-                        }
-                        else
-                        {
-                            b = c;
+                            id = c;
                         }
                         count++;
                     }
                     re.Close();
+                    if (user != null && id != null)
+                    {
+                        if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt"))
+                        {
+                            Form2 form = new Form2();
+                            Mainclass.showWindow(form, this);
+                        }
+                        else
+                        {
+                            string path1 = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
+                            StreamReader rea = new StreamReader(path1);
+                            int count1 = 0;
+                            while (!rea.EndOfStream)
+                            {
+                                c = rea.ReadLine();
+                                if (count1 == 0)
+                                {
+                                    b = c;
 
-                    BAL.BAL.isValidUser(a, b);
-                    Form2 sa = new Form2();
-                    Mainclass.showWindow(sa, this);
+                                }
+                                else if (count1 == 1)
+                                {
+                                    ea = c;
+                                }
+                                count1++;
+                            }
+                            re.Close();
+                            Retrival.getemp(b, ea);
+                            Menu m = new Menu();
+                            Mainclass.showWindow(m, this);
+                        }
+                    }
+                    
+                    
                 }
             }
             catch(Exception ex)  

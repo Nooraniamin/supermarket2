@@ -21,31 +21,16 @@ namespace Client_base
         {
             InitializeComponent();
         }
-        public void updateConfigFile(string name,string pass)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            foreach (XmlElement xElement in xmlDoc.DocumentElement)
-            {
-                if (xElement.Name == "connectionStrings")
-                {
-                    xElement.FirstChild.Attributes[2].Value = name;
-                    xElement.FirstChild.Attributes[3].Value = pass;
-                }
-            }
-            xmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            ConfigurationManager.RefreshSection("connectionString");
-        }
-        public static string id;
+        
         string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
         private void button1_Click(object sender, EventArgs e)
         {
+            Retrival.isValidUser(txt_cmpName.Text, txt_password.Text);
             StreamWriter wr = new StreamWriter(path);
             wr.WriteLine(txt_cmpName.Text);
             wr.WriteLine(txt_password.Text);
             wr.Close();
-            Setting s = new Setting();
-            Retrival.isValidUser(txt_cmpName.Text, txt_password.Text);
+            
             
            
         }

@@ -98,4 +98,36 @@ namespace BAL
             ds.CloseConnection();
         }
     }
+    public class user
+    {
+        public void u_insert(string name, int cnic,int salary,int b_id,int r_id,string u_name,string pass, string c_pass)
+        {
+            int cmp = 1;
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertuser", name, cnic,salary,b_id,r_id,u_name,pass,c_pass,cmp);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void u_delete(int id)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_userdelete", id);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void u_update(int id,string name, int cnic, int salary, int b_id, int r_id, string u_name, string pass, string c_pass)
+        {
+            int cmp = 1;
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_userupdate", id,name, cnic, salary, b_id, r_id, u_name, pass, c_pass, cmp);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
 }
