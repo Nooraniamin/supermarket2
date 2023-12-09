@@ -74,7 +74,8 @@ namespace Client_base
                         count++;
                     }
                     re.Close();
-                    if (user != null && id != null)
+                    bool condition = Retrival.isValidUser(user, id);
+                    if (condition == true)
                     {
                         if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt"))
                         {
@@ -101,10 +102,24 @@ namespace Client_base
                                 count1++;
                             }
                             re.Close();
-                            Retrival.getemp(b, ea);
-                            Menu m = new Menu();
-                            Mainclass.showWindow(m, this);
+                            bool condition1 = Retrival.getemp(b, ea);
+                            if (condition1 == true)
+                            {
+                                Menu m = new Menu();
+                                Mainclass.showWindow(m, this);
+                            }
+                            else
+                            {
+                                Form2 f = new Form2();
+                                Mainclass.showWindow(f, this);
+                            }
+                            
                         }
+                    }
+                    else
+                    {
+                        SignIn signIn = new SignIn();
+                        Mainclass.showWindow(signIn, this);
                     }
                     
                     

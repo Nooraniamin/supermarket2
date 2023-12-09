@@ -44,20 +44,7 @@ namespace Client_base
                 {
                     MessageBox.Show("Invalid User and Password ", "Error");
                 }
-                //if (txt_name.Text != "Owner" || txt_password.Text != "owner")
-                //{
-                //    MessageBox.Show("Wrong, Please put right username and password", "Error");
-                //}
-                //else if (txt_name.Text == "" && txt_password.Text == "")
-                //{
-                //    MessageBox.Show("Please Fill all the entities", "Error");
-                //}
-                //else if (txt_name.Text == "Owner" && txt_password.Text == "owner")
-                //{
-                //    MessageBox.Show("You Successfully login", "Success");
-                //    Menu asd = new Menu();
-                //    Mainclass.showWindow(asd, this, MDI.ActiveForm);
-                //}
+                
             }
             catch (Exception ex) 
             {
