@@ -13,29 +13,7 @@ namespace BAL
 {
     public class BAL
     {
-        public static string ID;
-        private static string name;
-
-        public static void isValidUser(string User, string password)
-        {
-            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
-
-            try
-            {
-                ds.OpenConnection();
-                ds.LoadSpParameters("st_getuser", User, password);
-                ds.ExecuteQuery();
-                ds.UnLoadSpParameters();
-                ds.CloseConnection();
-                name = User;
-            }
-            catch (Exception ex)
-            {
-                string ax = ex.Message;
-            }
-
-        }
-
+        
     }
     public class branch
     {
@@ -83,7 +61,7 @@ namespace BAL
         {
             ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
             ds.OpenConnection();
-            ds.LoadSpParameters("st_deletebranch", id);
+            ds.LoadSpParameters("st_deleterole", id);
             ds.ExecuteQuery();
             ds.UnLoadSpParameters();
             ds.CloseConnection();
@@ -92,7 +70,7 @@ namespace BAL
         {
             ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
             ds.OpenConnection();
-            ds.LoadSpParameters("st_updatebranch", id, name, fid);
+            ds.LoadSpParameters("st_updateroles", id, name, fid);
             ds.ExecuteQuery();
             ds.UnLoadSpParameters();
             ds.CloseConnection();
@@ -125,6 +103,66 @@ namespace BAL
             ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
             ds.OpenConnection();
             ds.LoadSpParameters("st_userupdate", id,name, cnic, salary, b_id, r_id, u_name, pass, c_pass, cmp);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
+    public class categories:branch
+    {
+        public override void b_insert(string name, int fid)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertCategories", name, fid);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public override void b_delete(int id)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_deleteCategories", id);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public override void b_update(int id, string name, int fid)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_updateCategories", id, name, fid);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
+    public class product
+    {
+        public void p_insert(string name , int c_id, double amount, double discount, double a_amount)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertproduct", name, c_id,amount,discount,a_amount,1);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void p_delete( int id)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_deleteproduct", id);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void p_update(int id,string name, int c_id, double amount, double discount, double a_amount)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_updateproduct",id, name, c_id, amount, discount, a_amount, 1);
             ds.ExecuteQuery();
             ds.UnLoadSpParameters();
             ds.CloseConnection();

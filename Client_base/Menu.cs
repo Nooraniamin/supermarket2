@@ -39,5 +39,11 @@ namespace Client_base
             User asd = new User();
             Mainclass.showWindow(asd,this, MDI.ActiveForm);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Products p = new Products();
+            Mainclass.showWindow(p, this, MDI.ActiveForm);
+        }
     }
 }

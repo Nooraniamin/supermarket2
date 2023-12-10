@@ -227,6 +227,61 @@ namespace Client_base
             }
 
         }
+        public static void getcategory(DataGridView gv, DataGridViewColumn IDGV, DataGridViewColumn NameGV, DataGridViewColumn ID, DataGridViewColumn NAME)
+        {
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("st_getCategories", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", 1);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                IDGV.DataPropertyName = dt.Columns["ID"].ToString();
+                NameGV.DataPropertyName = dt.Columns["NAME"].ToString();
+                ID.DataPropertyName = dt.Columns["COMPANY ID"].ToString();
+                NAME.DataPropertyName = dt.Columns["COMPANY NAME"].ToString();
+                gv.DataSource = dt;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                con.Close();
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+        public static void getproduct(DataGridView gv, DataGridViewColumn ID, DataGridViewColumn name, DataGridViewColumn cnic, DataGridViewColumn salary, DataGridViewColumn b_id, DataGridViewColumn branch, DataGridViewColumn r_id, DataGridViewColumn role, DataGridViewColumn u_name)
+        {
+            try
+            {
+                int cmp = 1;
+                con.Open();
+                SqlCommand cmd = new SqlCommand("st_getproduct", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", cmp);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                ID.DataPropertyName = dt.Columns["ID"].ToString();
+                name.DataPropertyName = dt.Columns["NAME"].ToString();
+                cnic.DataPropertyName = dt.Columns["C_ID"].ToString();
+                salary.DataPropertyName = dt.Columns["C_NAME"].ToString();
+                b_id.DataPropertyName = dt.Columns["AMOUNT"].ToString();
+                branch.DataPropertyName = dt.Columns["DISCOUNT"].ToString();
+                r_id.DataPropertyName = dt.Columns["A_DISCOUNT"].ToString();
+                role.DataPropertyName = dt.Columns["CMP_ID"].ToString();
+                u_name.DataPropertyName = dt.Columns["CMP_NAME"].ToString();
+                gv.DataSource = dt;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                con.Close();
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
     }
 
 }
