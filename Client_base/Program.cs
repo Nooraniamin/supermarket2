@@ -16,7 +16,19 @@ namespace Client_base
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MDI());
+            bool createdNew;
+            using (var mutex = new System.Threading.Mutex(true, "YourUniqueMutexName", out createdNew))
+            {
+                if (createdNew)
+                {
+                    Application.Run(new MDI());
+                }
+                else
+                {
+                    MessageBox.Show("Another instance is already running.");
+                }
+
+            }
         }
     }
 }
