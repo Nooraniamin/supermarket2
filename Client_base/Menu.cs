@@ -45,5 +45,11 @@ namespace Client_base
             Products p = new Products();
             Mainclass.showWindow(p, this, MDI.ActiveForm);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Billing b = new Billing();
+            Mainclass.showWindow(b,this, MDI.ActiveForm);
+        }
     }
 }

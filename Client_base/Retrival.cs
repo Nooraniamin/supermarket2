@@ -14,7 +14,7 @@ namespace Client_base
 {
     internal class Retrival
     {
-        private static string id;
+        public static string id;
         public static string cmp_id 
         {
             get 
@@ -157,6 +157,7 @@ namespace Client_base
                     status = false;
 
                 }
+                reader.Close();
                 con.Close();
             }
             catch (Exception ex)
@@ -166,6 +167,9 @@ namespace Client_base
             }
             return status;
         }
+        public static string name;
+        public static string branch;
+        public static string b_id;
         public static bool getemp(string user, string pass)
         {
             bool status = false;
@@ -184,8 +188,11 @@ namespace Client_base
                     {
                         if (user == reader["NAME"].ToString() && pass == reader["PASSWORD"].ToString())
                         {
-                            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\save name and password.txt";
+                            
                             id = reader["ID"].ToString();
+                            name = reader["NAME"].ToString();
+                            branch = reader["BRANCH"].ToString();
+                            b_id = reader["B_ID"].ToString();
                             status = true;
                         }
                         else
@@ -198,6 +205,7 @@ namespace Client_base
                 {
                     status = false;
                 }
+                reader.Close();
                 con.Close();
             }
             catch (Exception ex)
@@ -220,10 +228,33 @@ namespace Client_base
                 cb.DisplayMember = dMember;
                 cb.ValueMember = vMember;
                 cb.DataSource = dt;
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        public static void loaditems(string proc, ComboBox cb,int a ,string vMember, string dMember)
+        
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(proc, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", a);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                cb.DisplayMember = dMember;
+                cb.ValueMember = vMember;
+                cb.DataSource = dt;
+                con.Close ();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -281,6 +312,7 @@ namespace Client_base
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        
 
     }
 
