@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,17 @@ namespace Client_base
         {
             Billing b = new Billing();
             Mainclass.showWindow(b,this, MDI.ActiveForm);
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
+            StreamWriter w = new StreamWriter(path);
+            w.WriteLine("");
+            w.WriteLine("");
+            w.Close();
+            Form2 f = new Form2();
+            Mainclass.showWindow(f,this,MDI.ActiveForm);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace Client_base
 {
     internal class Retrival
     {
-        public static string id;
+        private static string id;
+        public static string uid;
         public static string cmp_id 
         {
             get 
@@ -189,7 +190,7 @@ namespace Client_base
                         if (user == reader["NAME"].ToString() && pass == reader["PASSWORD"].ToString())
                         {
                             
-                            id = reader["ID"].ToString();
+                            uid = reader["ID"].ToString();
                             name = reader["NAME"].ToString();
                             branch = reader["BRANCH"].ToString();
                             b_id = reader["B_ID"].ToString();
@@ -312,7 +313,80 @@ namespace Client_base
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-        
+        public static void getitems(int billno,DataGridView gv, DataGridViewColumn id, DataGridViewColumn p_id, DataGridViewColumn product, DataGridViewColumn price, DataGridViewColumn discount, DataGridViewColumn a_amount, DataGridViewColumn qty, DataGridViewColumn total)
+        {
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("st_getitems", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@billno", billno);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                id.DataPropertyName = dt.Columns["id"].ToString();
+                p_id.DataPropertyName = dt.Columns["p_id"].ToString();
+                product.DataPropertyName = dt.Columns["Product"].ToString();
+                price.DataPropertyName = dt.Columns["Price"].ToString();
+                discount.DataPropertyName = dt.Columns["discount"].ToString();
+                a_amount.DataPropertyName = dt.Columns["after amount"].ToString();
+                qty.DataPropertyName = dt.Columns["qty"].ToString();
+                total.DataPropertyName = dt.Columns["total"].ToString();
+                gv.DataSource = dt;
+                con.Close();
+            }
+            catch (Exception ex) 
+            {
+                con.Close();
+                MessageBox.Show(ex.Message, "Error");
+                
+            }
+            
+        }
+        public static int cusid;
+        public static string cusname;
+        public static bool cus(string number)
+        {
+            bool status = false;
+            try
+            {
+                SqlCommand cmd = new SqlCommand("st_getcusWRTphone", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@phone", number);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (number == reader["phone"].ToString())
+                        {
+
+                            cusid = Convert.ToInt32(reader["id"].ToString());
+                            cusname = reader["name"].ToString();
+                            status = true;
+                        }
+                        else
+                        {
+                            status = false;
+                        }
+                    }
+                }
+                else
+                {
+                    status = false;
+                }
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                con.Close();
+            }
+            return status;
+        }
+
 
     }
 

@@ -2,12 +2,15 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace BAL
 {
@@ -163,6 +166,60 @@ namespace BAL
             ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
             ds.OpenConnection();
             ds.LoadSpParameters("st_updateproduct",id, name, c_id, amount, discount, a_amount, 1);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
+    public class item
+    {
+        public void i_insert(int billno, int p_id,double price,double discount,double a_amount,int qty,double total,int b_id,int u_id,string date)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertitem", billno,p_id, price, discount,a_amount, qty,total, b_id,u_id,date);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void i_delete(int id)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_deleteitem", id);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+        public void i_update(int id,int billno, int p_id, double price, double discount, double a_amount, int qty, double total, int b_id, int u_id, string date)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_updateitem",id, billno, p_id, price, discount, a_amount, qty, total, b_id, u_id, date);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
+    public class customer
+    {
+        public void cus_insert(string name,string phone,int id = 1)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertcustomer", name,phone,id);
+            ds.ExecuteQuery();
+            ds.UnLoadSpParameters();
+            ds.CloseConnection();
+        }
+    }
+    public class bill
+    {
+        public void bill_insert(int billno,string billtype,double f_amount, int cusid, int bid, double g_amount = 0,double r_amount=0)
+        {
+            ClassLibrary1.DDL ds = new ClassLibrary1.DDL();
+            ds.OpenConnection();
+            ds.LoadSpParameters("st_insertbill", billno ,billtype,f_amount,g_amount,r_amount,cusid,bid);
             ds.ExecuteQuery();
             ds.UnLoadSpParameters();
             ds.CloseConnection();
