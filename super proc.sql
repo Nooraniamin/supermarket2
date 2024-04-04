@@ -165,3 +165,263 @@ inner join roles r
 on r.r_id = u.u_id
 inner join company c
 on c.cmp_id = u.u_id
+create procedure st_getcompany
+@name varchar(30),
+@pass varchar(10)
+as
+select c.cmp_id as 'ID', c.cmp_name as 'Name', c.cmp_key as 'Key' from company c
+where	
+c.cmp_name = @name and
+c.cmp_key = @pass
+
+create procedure st_getlogin
+@id int,
+@name varchar(30),
+@pass varchar(30)
+as
+select
+u.u_id as 'ID',
+u.u_name as 'NAME',
+u.u_cnic as 'CNIC',
+u.u_salary as 'SALARY',
+u.b_id as 'B_ID',
+b.b_name as 'BRANCH',
+u.r_id as 'R_ID',
+r.r_name as 'ROLES',
+u.u_u_name as 'U_NAME',
+u.u_password as 'PASSWORD',
+u.u_c_password as 'C_PASSWORD',
+u.cmp_id as 'C_ID',
+c.cmp_name as 'COMPANY NAME'
+from users u
+inner join branch b
+on b.b_id = u.b_id
+inner join roles r
+on r.r_id = u.r_id
+inner join company c
+on c.cmp_id = u.cmp_id
+where
+c.cmp_id = @id and u.u_name = @name and u.u_c_password = @pass 
+
+create procedure st_insertCategories
+@name varchar(50),
+@cmp_id int
+as
+insert into categories values(@name,@cmp_id)
+
+create procedure st_deleteCategories
+@id int
+as
+delete from categories where c_id = @id
+
+create procedure st_updateCategories
+@id int,
+@name varchar(50),
+@cmp_id int
+as
+update categories
+set 
+c_name = @name,
+cmp_id = @cmp_id
+where
+c_id = @id
+
+create procedure st_getCategories
+@id int
+as 
+select
+c.c_id as 'ID',
+c.c_name as'NAME',
+c.cmp_id as 'COMPANY ID',
+cmp.cmp_name as'COMPANY NAME'
+from categories c
+inner join company cmp
+on cmp.cmp_id = c.cmp_id
+where c.cmp_id = @id
+order by c.c_name asc
+
+create procedure st_insertproduct
+@name varchar(30),
+@c_id int,
+@amount money,
+@discont int,
+@a_amount money,
+@cmp_id int
+as 
+insert into product values(@name,@c_id,@amount,@discont,@a_amount,@cmp_id)
+
+create procedure st_deleteproduct
+@id int
+as
+delete from product where p_id = @id
+ 
+create procedure st_updateproduct
+@id int,
+@name varchar(30),
+@c_id int,
+@amount money,
+@discount int,
+@a_amount money,
+@cmp_id int
+as
+update product
+set
+p_name = @name,
+c_id = @c_id,
+amount = @amount,
+discount = @discount,
+a_discount = @a_amount,
+cmp_id =  @cmp_id
+where
+p_id = @id 
+
+create procedure st_getproduct
+@id int
+as
+select
+p.p_id as 'ID',
+p.p_name as 'NAME',
+p.c_id as 'C_ID',
+c.c_name as 'C_NAME',
+p.amount as 'AMOUNT',
+p.discount as 'DISCOUNT',
+p.a_discount as 'A_DISCOUNT',
+p.cmp_id as 'CMP_ID',
+cmp.cmp_name as 'CMP_NAME'
+from product p
+inner join categories c
+on c.c_id = p.c_id
+inner join company cmp
+on cmp.cmp_id = p.cmp_id
+where
+cmp.cmp_id = @id 
+order by p.p_name asc
+
+create procedure st_getMenu
+@id int
+as 
+select
+p.p_id as 'ID',
+p.p_name as'NAME'
+from product p
+inner join categories c
+on c.c_id = p.c_id
+where p.c_id = @id
+order by p.p_name asc
+
+create procedure st_getpriceWRTproduct
+@id int
+as 
+select
+p.amount as 'Price',
+p.discount as 'Discount',
+p.a_discount as 'After discount'
+from product p
+where 
+p.p_id = @id
+
+create procedure st_insertitem
+@billno int,
+@p_id int,
+@price money,
+@discount money,
+@a_amount money,
+@qty int,
+@famount money,
+@b_id int,
+@u_id int,
+@date varchar(10)
+as 
+insert into insertitems values(@billno,@p_id,@price,@discount,@a_amount,@qty ,@famount,@b_id ,@u_id,@date)
+
+create procedure st_deleteitem
+@id int
+as
+delete from insertitems where  id = @id 
+
+create procedure st_updateitem
+@id int,
+@billno int,
+@p_id int,
+@price money,
+@discount money,
+@a_amount money,
+@qty int,
+@famount money,
+@b_id int,
+@u_id int,
+@date varchar(10)
+as
+update insertitems
+set
+p_id = @p_id,
+price = @price,
+discount = @discount,
+a_amount = @a_amount,
+qty = @qty,
+f_amount = @famount,
+b_id = @b_id,
+u_id = @u_id,
+dateno = @date
+where
+id = @id and billno = @billno
+
+alter procedure st_getitems
+@billno int
+as 
+select
+i.id as 'id',
+i.p_id as 'p_id',
+p.p_name as 'Product',
+i.price as 'Price',
+i.discount as 'discount',
+i.a_amount as 'after amount',
+i.qty as 'qty',
+i.f_amount as 'total',
+i.billno as 'Bill no'
+from insertitems i
+inner join product p
+on p.p_id = i.p_id
+where
+i.billno = @billno
+
+create procedure st_getcategoriesWRTproduct
+@id int
+as 
+select
+c.c_id as 'c_id',
+c.c_name as 'C_name'
+from categories c
+inner join product p
+on c.c_id = p.c_id
+where
+p.p_id = @id
+
+create procedure st_insertcustomer
+@name varchar(20),
+@phone varchar(15),
+@cmp int
+as
+insert into customer values(@name,@phone,@cmp)
+
+create procedure st_getcusWRTphone
+@phone varchar(15)
+as
+select
+c.cus_id as 'id',
+c.cus_name as 'name',
+c.cus_number as 'phone'
+from customer c
+where
+c.cus_number = @phone
+
+create procedure st_insertbill
+@billno int ,
+@billtype varchar(20),
+@f_amount money,
+@g_amount money,
+@r_amount money,
+@cus_id int,
+@b_id int 
+as
+insert into bill values(@billno,@billtype ,@f_amount ,@g_amount ,@r_amount ,@cus_id ,@b_id)

@@ -103,16 +103,12 @@ namespace Client_base
                             }
                             re.Close();
                             bool condition1 = Retrival.getemp(b, ea);
-                            if (condition1 == true)
-                            {
-                                Menu m = new Menu();
-                                Mainclass.showWindow(m, this);
-                            }
-                            else
+                            if (condition1 != true)
                             {
                                 Form2 f = new Form2();
                                 Mainclass.showWindow(f, this);
                             }
+                            
                             
                         }
                     }

@@ -55,11 +55,11 @@ namespace Client_base
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
-            StreamWriter w = new StreamWriter(path);
-            w.WriteLine("");
-            w.WriteLine("");
-            w.Close();
+            //string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
+            //StreamWriter w = new StreamWriter(path);
+            //w.WriteLine("");
+            //w.WriteLine("");
+            //w.Close();
             Form2 f = new Form2();
             Mainclass.showWindow(f,this,MDI.ActiveForm);
         }

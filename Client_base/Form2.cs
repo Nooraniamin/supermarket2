@@ -26,25 +26,17 @@ namespace Client_base
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool condition = Retrival.getemp(txt_name.Text, txt_password.Text);
+            
             try
             {
                 string path1 = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\empid and pass.txt";
-                if (condition == true)
-                {
-                    MessageBox.Show("You Successfully login", "Success");
-                    StreamWriter w = new StreamWriter(path1);
-                    w.WriteLine(txt_name.Text);
-                    w.WriteLine(txt_password.Text);
-                    w.Close();
-                    Menu asd = new Menu();
-                    Mainclass.showWindow(asd, this, MDI.ActiveForm);
-                }
-                else
-                {
-                    MessageBox.Show("Invalid User and Password ", "Error");
-                }
                 
+                MessageBox.Show("You Successfully login", "Success");
+                StreamWriter w = new StreamWriter(path1);
+                w.WriteLine(txt_name.Text);
+                w.WriteLine(txt_password.Text);
+                w.Close();
+                bool condition = Retrival.getemp(txt_name.Text, txt_password.Text);
             }
             catch (Exception ex) 
             {

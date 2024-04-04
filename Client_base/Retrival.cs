@@ -191,10 +191,30 @@ namespace Client_base
                         {
                             
                             uid = reader["ID"].ToString();
+                            string role = reader["ROLES"].ToString();
                             name = reader["NAME"].ToString();
                             branch = reader["BRANCH"].ToString();
                             b_id = reader["B_ID"].ToString();
                             status = true;
+                            if(role == "Owner")
+                            {
+                                Menu m = new Menu();
+                                Mainclass.showWindow(m, MDI.ActiveForm);
+                                
+                            }
+                            else if(role == "Manager")
+                            {
+                                Managermenu m = new Managermenu();
+                                Mainclass.showWindow(m,MDI.ActiveForm);
+                                
+                            }
+                            else if (role =="Seller")
+                            {
+                                Counter c = new Counter();
+                                Mainclass.showWindow(c, MDI.ActiveForm);
+                                
+                            }
+                            
                         }
                         else
                         {
@@ -212,6 +232,7 @@ namespace Client_base
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+                
                 con.Close();
             }
             return status;
